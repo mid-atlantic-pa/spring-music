@@ -3,10 +3,20 @@ package org.cloudfoundry.samples.music.domain;
 public class ApplicationInfo {
     private String[] profiles;
     private String[] services;
+    private Color color;
 
-    public ApplicationInfo(String[] profiles, String[] services) {
+    public ApplicationInfo(String[] profiles, String[] services, Color color) {
         this.profiles = profiles;
         this.services = services;
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public String[] getProfiles() {

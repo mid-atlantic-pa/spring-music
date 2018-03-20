@@ -1,7 +1,9 @@
 package org.cloudfoundry.samples.music.web;
 
 import org.cloudfoundry.samples.music.domain.ApplicationInfo;
+import org.cloudfoundry.samples.music.domain.Color;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.Cloud;
 import org.springframework.cloud.service.ServiceInfo;
 import org.springframework.core.env.Environment;
@@ -18,14 +20,17 @@ public class InfoController {
 
     private Environment springEnvironment;
 
+    private static Color color;
+
     @Autowired
-    public InfoController(Environment springEnvironment) {
+    public InfoController(@Value("${demo.color:green}")String color, Environment springEnvironment) {
         this.springEnvironment = springEnvironment;
+        this.color = new Color(color);
     }
 
     @RequestMapping(value = "/appinfo")
     public ApplicationInfo info() {
-        return new ApplicationInfo(springEnvironment.getActiveProfiles(), getServiceNames());
+        return new ApplicationInfo(springEnvironment.getActiveProfiles(), getServiceNames(), color);
     }
 
     @RequestMapping(value = "/service")
