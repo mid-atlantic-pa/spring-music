@@ -9,6 +9,9 @@
             </div>
 
             <ul class="nav navbar-nav navbar-right">
+                <li><a><strong>Instance Index:</strong> {{info.vcap.instanceIndex}}</a></li>
+                <li><a><strong>Container Address:</strong> {{info.vcap.containerAddr}}</a></li>
+                <li><a><strong>Cell Address:</strong> {{info.vcap.instanceAddr}}</a></li>
                 <li>
                     <a href="#" ng-click="toggleRefreshStatus()">
                         <span ng-show="refreshEnabled">Disable Refresh</span></span>

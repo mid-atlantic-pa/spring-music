@@ -1,14 +1,26 @@
 package org.cloudfoundry.samples.music.domain;
 
+import java.util.Map;
+
 public class ApplicationInfo {
     private String[] profiles;
     private String[] services;
     private Color color;
+    private Map<String, Object> vcap;
 
-    public ApplicationInfo(String[] profiles, String[] services, Color color) {
+    public ApplicationInfo(String[] profiles, String[] services, Color color, Map<String, Object> vcap) {
         this.profiles = profiles;
         this.services = services;
         this.color = color;
+        this.vcap = vcap;
+    }
+
+    public Map<String, Object> getVcap() {
+        return vcap;
+    }
+
+    public void setVcap(Map<String, Object> vcap) {
+        this.vcap = vcap;
     }
 
     public Color getColor() {
