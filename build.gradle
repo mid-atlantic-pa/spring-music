@@ -1,25 +1,16 @@
 buildscript {
-    ext {
-        springBootVersion = '1.5.4.RELEASE'
-        springCloudConnectorsVersion = '1.2.4.RELEASE'
-    }
-
     repositories {
-        jcenter()
         mavenCentral()
-        maven { url "https://repo.spring.io/plugins-release" }
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.5.RELEASE")
     }
 }
 
 apply plugin: 'java'
-
 apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
-
 apply plugin: 'org.springframework.boot'
 
 version = '1.0'
@@ -40,9 +31,9 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-data-redis"
 
     // Spring Cloud Connectors
-    compile "org.springframework.cloud:spring-cloud-core:${springCloudConnectorsVersion}"
-    compile "org.springframework.cloud:spring-cloud-spring-service-connector:${springCloudConnectorsVersion}"
-    compile "org.springframework.cloud:spring-cloud-cloudfoundry-connector:${springCloudConnectorsVersion}"
+    compile "org.springframework.cloud:spring-cloud-core"
+    compile "org.springframework.cloud:spring-cloud-spring-service-connector"
+    compile "org.springframework.cloud:spring-cloud-cloudfoundry-connector"
 
     // JPA Persistence
     compile "commons-dbcp:commons-dbcp"
@@ -57,10 +48,6 @@ dependencies {
     compile "org.webjars:angular-ui:0.4.0-2"
     compile "org.webjars:angular-ui-bootstrap:0.10.0-1"
     compile "org.webjars:jquery:2.1.0-2"
-
-    // Oracle - uncomment one of the following after placing driver in ./libs
-    // compile files('libs/ojdbc8.jar')
-    // compile files('libs/ojdbc7.jar')
 
     // Testing
     testCompile "junit:junit"
