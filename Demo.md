@@ -14,15 +14,10 @@ https://spring-music.apps.gcp.winterfell.live
 # Do It
 
 ## Make update to the code
+Edit InfoController.java changing the default from blue to green in the constructor
+
+## Package the update
 ./gradlew clean build -x test
-
-## Push it
-cf push
-
-## 
-
-## Make update to the code
-./gradlew clean build
 
 ## Rename the existing app to venerable
 cf rename spring-music spring-music-venerable
