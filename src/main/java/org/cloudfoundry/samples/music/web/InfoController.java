@@ -1,12 +1,12 @@
 package org.cloudfoundry.samples.music.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.pivotal.cfenv.core.CfEnv;
+import io.pivotal.cfenv.core.CfService;
 import org.cloudfoundry.samples.music.domain.ApplicationInfo;
 import org.cloudfoundry.samples.music.domain.Color;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.Cloud;
-import org.springframework.cloud.service.ServiceInfo;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +19,7 @@ import java.util.Map;
 
 @RestController
 public class InfoController {
-    @Autowired(required = false)
-    private Cloud cloud;
+    private final CfEnv cfEnv;
 
     private Environment springEnvironment;
 
@@ -30,6 +29,8 @@ public class InfoController {
     public InfoController(@Value("${demo.color:blue}")String color, Environment springEnvironment) {
         this.springEnvironment = springEnvironment;
         this.color = new Color(color);
+
+        this.cfEnv = new CfEnv();
     }
 
     @RequestMapping(value = "/appinfo")
@@ -59,26 +60,18 @@ public class InfoController {
     }
 
     @RequestMapping(value = "/service")
-    public List<ServiceInfo> showServiceInfo() {
-        if (cloud != null) {
-            return cloud.getServiceInfos();
-        } else {
-            return new ArrayList<>();
-        }
+    public List<CfService> showServiceInfo() {
+        return cfEnv.findAllServices();
     }
 
     private String[] getServiceNames() {
-        if (cloud != null) {
-            final List<ServiceInfo> serviceInfos = cloud.getServiceInfos();
+        List<CfService> services = cfEnv.findAllServices();
 
-            List<String> names = new ArrayList<>();
-            for (ServiceInfo serviceInfo : serviceInfos) {
-                names.add(serviceInfo.getId());
-            }
-            return names.toArray(new String[names.size()]);
-        } else {
-            return new String[]{};
+        List<String> names = new ArrayList<>();
+        for (CfService service : services) {
+            names.add(service.getName());
         }
+        return names.toArray(new String[0]);
     }
 
     @SuppressWarnings("rawtypes")
